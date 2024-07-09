@@ -1,8 +1,11 @@
 [package]
 name = "tauri-plugin-status-bar-color"
-version = "0.0.0"
-authors = [ "You" ]
-description = ""
+version = "1.0.0"
+authors = [ "Zhang Yao<cineazhan@gmail.com>" ]
+description = "A Tauri plugin for set status bar's color."
+homepage = "https://github.com/Cinea4678/tauri-plugin-status-bar-color"
+repository = "https://github.com/Cinea4678/tauri-plugin-status-bar-color"
+license = "MIT"
 edition = "2021"
 rust-version = "1.70"
 exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
