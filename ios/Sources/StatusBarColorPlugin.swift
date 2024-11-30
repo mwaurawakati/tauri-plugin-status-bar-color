@@ -47,10 +47,10 @@ class StatusBarColorPlugin: Plugin {
         
         let color = UIColor(hex: args.hex)
         
-        // Change status bar color
         DispatchQueue.main.async {
             if let ws = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 if let window = ws.windows.first {
+                    // Status bar color
                     if let existingStatusBar = window.viewWithTag(MAGIC_NUMBER) {
                         existingStatusBar.backgroundColor = color
                     } else {
@@ -62,12 +62,33 @@ class StatusBarColorPlugin: Plugin {
                         }
                     }
                     
-                    // Change navigation bar (toolbar) color
+                    // Navigation bar (toolbar) color
                     UINavigationBar.appearance().barTintColor = color
-                    UINavigationBar.appearance().tintColor = .white // Optional: sets icon and text color to white
+                    UINavigationBar.appearance().tintColor = .white // Optional: set icon/text color to white
                     UINavigationBar.appearance().titleTextAttributes = [
                         .foregroundColor: UIColor.white
                     ]
+                    
+                    // Set color for the safe areas (top and bottom)
+                    let safeAreaInsets = window.safeAreaInsets
+                    let topSafeArea = UIView(frame: CGRect(x: 0, y: 0, width: window.frame.width, height: safeAreaInsets.top))
+                    let bottomSafeArea = UIView(frame: CGRect(x: 0, y: window.frame.height - safeAreaInsets.bottom, width: window.frame.width, height: safeAreaInsets.bottom))
+                    
+                    topSafeArea.backgroundColor = color
+                    bottomSafeArea.backgroundColor = color
+                    
+                    window.addSubview(topSafeArea)
+                    window.addSubview(bottomSafeArea)
+                    
+                    // Optionally, apply color to the left and right safe areas (if needed)
+                    let leftSafeArea = UIView(frame: CGRect(x: 0, y: safeAreaInsets.top, width: safeAreaInsets.left, height: window.frame.height - safeAreaInsets.top - safeAreaInsets.bottom))
+                    let rightSafeArea = UIView(frame: CGRect(x: window.frame.width - safeAreaInsets.right, y: safeAreaInsets.top, width: safeAreaInsets.right, height: window.frame.height - safeAreaInsets.top - safeAreaInsets.bottom))
+                    
+                    leftSafeArea.backgroundColor = color
+                    rightSafeArea.backgroundColor = color
+                    
+                    window.addSubview(leftSafeArea)
+                    window.addSubview(rightSafeArea)
                 }
             }
         }
