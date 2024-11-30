@@ -77,6 +77,7 @@ class StatusBarColorPlugin: Plugin {
                     topSafeArea.backgroundColor = color
                     bottomSafeArea.backgroundColor = color
                     
+                    // Add views to window for top and bottom safe areas
                     window.addSubview(topSafeArea)
                     window.addSubview(bottomSafeArea)
                     
@@ -87,6 +88,7 @@ class StatusBarColorPlugin: Plugin {
                     leftSafeArea.backgroundColor = color
                     rightSafeArea.backgroundColor = color
                     
+                    // Add views to window for left and right safe areas
                     window.addSubview(leftSafeArea)
                     window.addSubview(rightSafeArea)
                 }
