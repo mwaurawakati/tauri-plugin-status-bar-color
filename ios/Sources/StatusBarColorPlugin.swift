@@ -47,15 +47,7 @@ class StatusBarColorPlugin: Plugin {
         
         let color = UIColor(hex: args.hex)
         
-//        if let existingStatusBar = UIApplication.shared.keyWindow?.viewWithTag(999) {
-//            existingStatusBar.backgroundColor = color
-//        } else {
-//            let statusBar = UIView(frame: UIApplication.shared.statusBarFrame)
-//            statusBar.backgroundColor = color
-//            statusBar.tag = 999 // 添加标签以便后续查找
-//            UIApplication.shared.keyWindow?.addSubview(statusBar)
-//        }
-        
+        // Change status bar color
         DispatchQueue.main.async {
             if let ws = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 if let window = ws.windows.first {
@@ -69,6 +61,13 @@ class StatusBarColorPlugin: Plugin {
                             window.addSubview(statusBar)
                         }
                     }
+                    
+                    // Change navigation bar (toolbar) color
+                    UINavigationBar.appearance().barTintColor = color
+                    UINavigationBar.appearance().tintColor = .white // Optional: sets icon and text color to white
+                    UINavigationBar.appearance().titleTextAttributes = [
+                        .foregroundColor: UIColor.white
+                    ]
                 }
             }
         }
