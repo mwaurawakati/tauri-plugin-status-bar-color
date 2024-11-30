@@ -3,29 +3,35 @@ package cc.cinea.statusBarColor
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.WindowInsetsController
 
 class PluginImpl {
     fun setColor(hex: String, activity: Activity) {
         val color = Color.parseColor(hex)
-        activity.window.statusBarColor = color
-
         val isLightColor = isColorLight(color)
 
+        // Set the status bar color
+        activity.window.statusBarColor = color
+
+        // Set the navigation bar color
+        activity.window.navigationBarColor = color
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Adjust system bar appearance for light/dark content
             val appearance = if (isLightColor) {
-                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
             } else {
                 0
             }
-            activity.window.insetsController?.setSystemBarsAppearance(appearance, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+            activity.window.insetsController?.setSystemBarsAppearance(
+                appearance,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+            )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // 使用 SystemUiVisibility 设置状态栏图标和文字为深色
             @Suppress("DEPRECATION")
             activity.window.decorView.systemUiVisibility = if (isLightColor) {
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             } else {
                 0
             }
